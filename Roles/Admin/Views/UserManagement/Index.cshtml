@@ -8,9 +8,7 @@
         <p class="text-muted mb-0">Manage staff accounts, roles and access permissions.</p>
     </div>
     <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-        <a href="/UserManagement/Create" class="btn btn-primary px-4 py-2">
-            <i class="fa-solid fa-user-plus me-2"></i> Add New User
-        </a>
+        <a href="/UserManagement/Create" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-user-plus me-2"></i> Add New User</a>
     </div>
 </div>
 
@@ -20,11 +18,11 @@
             <div class="col-md-5">
                 <div class="search-bar d-flex align-items-center bg-light px-3 py-1 rounded-pill" style="border: 1px solid var(--border-color);">
                     <i class="fa-solid fa-magnifying-glass text-muted me-2"></i>
-                    <input type="text" id="userSearch" class="form-control border-0 bg-transparent py-1 shadow-none" placeholder="Search by name, email or role..." style="font-size: 0.85rem;" />
+                    <input type="text" class="form-control border-0 bg-transparent py-1 shadow-none" placeholder="Search by name, email or role..." style="font-size: 0.85rem;" />
                 </div>
             </div>
             <div class="col-md-3">
-                <select id="userRoleFilter" class="form-select bg-light border-0 py-2 shadow-none" style="font-size: 0.85rem; border-radius: 50rem;">
+                <select class="form-select bg-light border-0 py-2 shadow-none" style="font-size: 0.85rem; border-radius: 50rem;">
                     <option value="all">All Roles</option>
                     <option value="admin">Admin</option>
                     <option value="loan officer">Loan Officer</option>
@@ -38,16 +36,62 @@
             <table class="table align-middle">
                 <thead>
                     <tr>
-                        <th data-sort="name">Name</th>
-                        <th data-sort="email">Email</th>
-                        <th data-sort="role">Role</th>
-                        <th data-sort="branch">Branch</th>
-                        <th data-sort="status">Status</th>
-                        <th data-sort="lastLogin">Last Login</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Branch</th>
+                        <th>Status</th>
+                        <th>Last Login</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="userTableBody"></tbody>
+                <tbody>
+                    <tr>
+                        <td><div class="d-flex align-items-center gap-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 0.75rem; font-weight: 700;">L</div><span class="fw-semibold">Likhith Kumar</span></div></td>
+                        <td>likhith.k@locps.in</td>
+                        <td><span class="badge bg-primary rounded-pill px-2">Loan Officer</span></td>
+                        <td>Bangalore HQ</td>
+                        <td><span class="badge-status badge-status-approved">Active</span></td>
+                        <td>2026-06-24</td>
+                        <td class="text-end"><a href="/UserManagement/Edit/1" class="btn btn-sm btn-light border" title="Edit"><i class="fa-solid fa-pen-to-square text-muted"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td><div class="d-flex align-items-center gap-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 0.75rem; font-weight: 700;">A</div><span class="fw-semibold">Anjali Sharma</span></div></td>
+                        <td>anjali.s@locps.in</td>
+                        <td><span class="badge bg-info rounded-pill px-2">Underwriter</span></td>
+                        <td>Bangalore HQ</td>
+                        <td><span class="badge-status badge-status-approved">Active</span></td>
+                        <td>2026-06-24</td>
+                        <td class="text-end"><a href="/UserManagement/Edit/2" class="btn btn-sm btn-light border" title="Edit"><i class="fa-solid fa-pen-to-square text-muted"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td><div class="d-flex align-items-center gap-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 0.75rem; font-weight: 700;">S</div><span class="fw-semibold">System Administrator</span></div></td>
+                        <td>admin@locps.in</td>
+                        <td><span class="badge bg-danger rounded-pill px-2">Admin</span></td>
+                        <td>All Branches</td>
+                        <td><span class="badge-status badge-status-approved">Active</span></td>
+                        <td>2026-06-23</td>
+                        <td class="text-end"><a href="/UserManagement/Edit/3" class="btn btn-sm btn-light border" title="Edit"><i class="fa-solid fa-pen-to-square text-muted"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td><div class="d-flex align-items-center gap-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 0.75rem; font-weight: 700;">P</div><span class="fw-semibold">Pradeep Menon</span></div></td>
+                        <td>pradeep.m@locps.in</td>
+                        <td><span class="badge bg-primary rounded-pill px-2">Loan Officer</span></td>
+                        <td>Chennai Branch</td>
+                        <td><span class="badge-status badge-status-approved">Active</span></td>
+                        <td>2026-06-22</td>
+                        <td class="text-end"><a href="/UserManagement/Edit/4" class="btn btn-sm btn-light border" title="Edit"><i class="fa-solid fa-pen-to-square text-muted"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td><div class="d-flex align-items-center gap-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 0.75rem; font-weight: 700;">K</div><span class="fw-semibold">Kavitha Rajan</span></div></td>
+                        <td>kavitha.r@locps.in</td>
+                        <td><span class="badge bg-info rounded-pill px-2">Underwriter</span></td>
+                        <td>Mumbai Branch</td>
+                        <td><span class="badge-status badge-status-rejected">Inactive</span></td>
+                        <td>2026-06-10</td>
+                        <td class="text-end"><a href="/UserManagement/Edit/5" class="btn btn-sm btn-light border" title="Edit"><i class="fa-solid fa-pen-to-square text-muted"></i></a></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -55,46 +99,3 @@
         @await Html.PartialAsync("_Pagination")
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/js/data-grid.js"></script>
-    <script>
-        const usersDb = [
-            { name: "Likhith Kumar", email: "likhith.k@locps.in", role: "Loan Officer", branch: "Bangalore HQ", status: "Active", lastLogin: "2026-06-24" },
-            { name: "Anjali Sharma", email: "anjali.s@locps.in", role: "Underwriter", branch: "Bangalore HQ", status: "Active", lastLogin: "2026-06-24" },
-            { name: "System Administrator", email: "admin@locps.in", role: "Admin", branch: "All Branches", status: "Active", lastLogin: "2026-06-23" },
-            { name: "Pradeep Menon", email: "pradeep.m@locps.in", role: "Loan Officer", branch: "Chennai Branch", status: "Active", lastLogin: "2026-06-22" },
-            { name: "Kavitha Rajan", email: "kavitha.r@locps.in", role: "Underwriter", branch: "Mumbai Branch", status: "Inactive", lastLogin: "2026-06-10" }
-        ];
-
-        const columns = [
-            { key: "name", renderer: (val) => `<div class="d-flex align-items-center gap-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 0.75rem; font-weight: 700;">${val.charAt(0)}</div><span class="fw-semibold">${val}</span></div>` },
-            { key: "email" },
-            { key: "role", renderer: val => {
-                const colors = { "Admin": "bg-danger", "Loan Officer": "bg-primary", "Underwriter": "bg-info" };
-                return `<span class="badge ${colors[val] || 'bg-secondary'} rounded-pill px-2">${val}</span>`;
-            }},
-            { key: "branch" },
-            { key: "status", renderer: val => `<span class="badge-status ${val === 'Active' ? 'badge-status-approved' : 'badge-status-rejected'}">${val}</span>` },
-            { key: "lastLogin" }
-        ];
-
-        const actionsRenderer = (row) => `
-            <div class="text-end d-flex gap-1 justify-content-end">
-                <a href="/UserManagement/Edit/1" class="btn btn-sm btn-light border" title="Edit"><i class="fa-solid fa-pen-to-square text-muted"></i></a>
-                <button class="btn btn-sm btn-light border" title="Toggle Status" onclick="showToast('Status Updated','User status has been toggled.','info')"><i class="fa-solid fa-toggle-on text-muted"></i></button>
-            </div>`;
-
-        document.addEventListener("DOMContentLoaded", function () {
-            new LocalDataGrid({
-                tableBodyId: "userTableBody",
-                dataset: usersDb,
-                columns: columns,
-                searchInputId: "userSearch",
-                filterInputs: [{ id: "userRoleFilter", key: "role" }],
-                itemsPerPage: 5,
-                actionsRenderer: actionsRenderer
-            });
-        });
-    </script>
-}

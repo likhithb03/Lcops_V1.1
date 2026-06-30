@@ -65,31 +65,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const logs = JSON.parse(localStorage.getItem("locps_workflow_logs") || "[]");
-
-            const kycLog = logs.find(l => l.action === "KYC Submission");
-            if (kycLog) {
-                document.getElementById("timeKycCompliant").textContent = `By Loan Officer: Likhith Kumar on ${kycLog.ts}`;
-            }
-
-            const aadhaarLog = logs.find(l => l.action === "Aadhaar Biometric Check Passed");
-            if (aadhaarLog) {
-                document.getElementById("timeAadhaarMatch").textContent = `Validated on ${aadhaarLog.ts}`;
-            }
-
-            const panLog = logs.find(l => l.action === "PAN Card Check Passed");
-            if (panLog) {
-                document.getElementById("timePanMatch").textContent = `Validated on ${panLog.ts}`;
-            }
-
-            const createLog = logs.find(l => l.action === "Customer Registration");
-            if (createLog) {
-                document.getElementById("timeKycCreated").textContent = `Created on ${createLog.ts}`;
-            }
-        });
-    </script>
-}

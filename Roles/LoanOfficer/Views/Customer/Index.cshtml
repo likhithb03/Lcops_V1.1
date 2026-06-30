@@ -12,18 +12,17 @@
 
 @await Html.PartialAsync("_WorkflowStepper")
 
-<!-- Main Search & Filter Table -->
 <div class="card border-0 shadow-sm">
     <div class="card-header border-0 bg-white py-3">
         <div class="row g-3">
             <div class="col-md-5">
                 <div class="search-bar d-flex align-items-center bg-light px-3 py-1 rounded-pill" style="border: 1px solid var(--border-color);">
                     <i class="fa-solid fa-magnifying-glass text-muted me-2"></i>
-                    <input type="text" id="custSearch" class="form-control border-0 bg-transparent py-1 shadow-none" placeholder="Search by name, ID, email, phone..." style="font-size: 0.85rem;" />
+                    <input type="text" class="form-control border-0 bg-transparent py-1 shadow-none" placeholder="Search by name, ID, email, phone..." style="font-size: 0.85rem;" />
                 </div>
             </div>
             <div class="col-md-3">
-                <select id="custStatusFilter" class="form-select bg-light border-0 py-2 shadow-none" style="font-size: 0.85rem; border-radius: 50rem;">
+                <select class="form-select bg-light border-0 py-2 shadow-none" style="font-size: 0.85rem; border-radius: 50rem;">
                     <option value="all">All KYC Statuses</option>
                     <option value="verified">Verified</option>
                     <option value="pending">Pending</option>
@@ -32,23 +31,66 @@
             </div>
         </div>
     </div>
-    
     <div class="card-body p-0">
         <div class="table-responsive border-0">
             <table class="table align-middle">
                 <thead>
                     <tr>
-                        <th data-sort="id">Customer ID</th>
-                        <th data-sort="name">Full Name</th>
-                        <th data-sort="email">Email</th>
-                        <th data-sort="phone">Phone Number</th>
-                        <th data-sort="kyc">KYC Status</th>
-                        <th data-sort="created">Registration Date</th>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>KYC Status</th>
+                        <th>Registration Date</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="customerTableBody">
-                    <!-- Loaded dynamically via JavaScript -->
+                <tbody>
+                    <tr>
+                        <td><span class="fw-bold text-dark">CUST-9011</span></td>
+                        <td><div class="d-flex align-items-center gap-2"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-primary" style="width: 32px; height: 32px; font-weight: 700;">R</div><div class="fw-semibold">Rajesh Kumar</div></div></td>
+                        <td>rajesh.kumar@email.com</td>
+                        <td>+91 98765 43210</td>
+                        <td><span class="badge-status badge-status-approved">Verified</span></td>
+                        <td>2026-06-10</td>
+                        <td class="text-end"><a href="/Customer/Details/9011" class="btn btn-sm btn-light border"><i class="fa-solid fa-eye text-muted me-1"></i> View Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">CUST-9012</span></td>
+                        <td><div class="d-flex align-items-center gap-2"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-primary" style="width: 32px; height: 32px; font-weight: 700;">S</div><div class="fw-semibold">Sunitha Rao</div></div></td>
+                        <td>sunitha.rao@email.com</td>
+                        <td>+91 87654 32109</td>
+                        <td><span class="badge-status badge-status-approved">Verified</span></td>
+                        <td>2026-06-12</td>
+                        <td class="text-end"><a href="/Customer/Details/9012" class="btn btn-sm btn-light border"><i class="fa-solid fa-eye text-muted me-1"></i> View Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">CUST-9013</span></td>
+                        <td><div class="d-flex align-items-center gap-2"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-primary" style="width: 32px; height: 32px; font-weight: 700;">A</div><div class="fw-semibold">Amit Sharma</div></div></td>
+                        <td>amit.sharma@email.com</td>
+                        <td>+91 76543 21098</td>
+                        <td><span class="badge-status badge-status-pending">Pending</span></td>
+                        <td>2026-06-15</td>
+                        <td class="text-end"><a href="/Customer/Details/9013" class="btn btn-sm btn-light border"><i class="fa-solid fa-eye text-muted me-1"></i> View Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">CUST-9014</span></td>
+                        <td><div class="d-flex align-items-center gap-2"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-primary" style="width: 32px; height: 32px; font-weight: 700;">P</div><div class="fw-semibold">Priya Nair</div></div></td>
+                        <td>priya.nair@email.com</td>
+                        <td>+91 65432 10987</td>
+                        <td><span class="badge-status badge-status-rejected">Failed</span></td>
+                        <td>2026-06-18</td>
+                        <td class="text-end"><a href="/Customer/Details/9014" class="btn btn-sm btn-light border"><i class="fa-solid fa-eye text-muted me-1"></i> View Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">CUST-9015</span></td>
+                        <td><div class="d-flex align-items-center gap-2"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-primary" style="width: 32px; height: 32px; font-weight: 700;">V</div><div class="fw-semibold">Vikram Singh</div></div></td>
+                        <td>vikram.singh@email.com</td>
+                        <td>+91 98450 12345</td>
+                        <td><span class="badge-status badge-status-approved">Verified</span></td>
+                        <td>2026-06-20</td>
+                        <td class="text-end"><a href="/Customer/Details/9015" class="btn btn-sm btn-light border"><i class="fa-solid fa-eye text-muted me-1"></i> View Profile</a></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -57,63 +99,3 @@
         @await Html.PartialAsync("_Pagination")
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/js/data-grid.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Mock dataset representing customers
-            const customersDb = [
-                { id: "CUST-9011", name: "Rajesh Kumar", email: "rajesh.kumar@email.com", phone: "+91 98765 43210", kyc: "Verified", created: "2026-06-10" },
-                { id: "CUST-9012", name: "Sunitha Rao", email: "sunitha.rao@email.com", phone: "+91 87654 32109", kyc: "Verified", created: "2026-06-12" },
-                { id: "CUST-9013", name: "Amit Sharma", email: "amit.sharma@email.com", phone: "+91 76543 21098", kyc: "Pending", created: "2026-06-15" },
-                { id: "CUST-9014", name: "Priya Nair", email: "priya.nair@email.com", phone: "+91 65432 10987", kyc: "Failed", created: "2026-06-18" },
-                { id: "CUST-9015", name: "Vikram Singh", email: "vikram.singh@email.com", phone: "+91 98450 12345", kyc: "Verified", created: "2026-06-20" },
-                { id: "CUST-9016", name: "Deepa Balakrishnan", email: "deepa.b@email.com", phone: "+91 98401 54321", kyc: "Pending", created: "2026-06-22" },
-                { id: "CUST-9017", name: "Suresh Prabhu", email: "suresh.p@email.com", phone: "+91 99001 88776", kyc: "Verified", created: "2026-06-23" }
-            ];
-
-            // Render columns
-            const columns = [
-                { key: "id", renderer: val => `<span class="fw-bold text-dark">${val}</span>` },
-                { key: "name", renderer: (val, row) => `<div class="d-flex align-items-center gap-2">
-                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-primary" style="width: 32px; height: 32px; font-weight: 700;">${val.charAt(0)}</div>
-                    <div>
-                        <div class="fw-semibold">${val}</div>
-                    </div>
-                </div>` },
-                { key: "email" },
-                { key: "phone" },
-                { key: "kyc", renderer: val => {
-                    let badgeClass = "badge-status-pending";
-                    if (val === "Verified") badgeClass = "badge-status-approved";
-                    if (val === "Failed") badgeClass = "badge-status-rejected";
-                    return `<span class="badge-status ${badgeClass}">${val}</span>`;
-                }},
-                { key: "created" }
-            ];
-
-            // Actions Renderer
-            const actionsRenderer = row => `
-                <div class="text-end d-flex gap-2 justify-content-end">
-                    <a href="/Customer/Details/${row.id.replace('CUST-', '')}" class="btn btn-sm btn-light border" title="View details"><i class="fa-solid fa-eye text-muted me-1"></i> View Profile</a>
-                </div>
-            `;
-
-            // Instantiate
-            new LocalDataGrid({
-                tableBodyId: "customerTableBody",
-                dataset: customersDb,
-                columns: columns,
-                searchInputId: "custSearch",
-                filterInputs: [
-                    { id: "custStatusFilter", key: "kyc" }
-                ],
-                itemsPerPage: 5,
-                initialSortKey: "created",
-                initialSortOrder: "desc",
-                actionsRenderer: actionsRenderer
-            });
-        });
-    </script>
-}

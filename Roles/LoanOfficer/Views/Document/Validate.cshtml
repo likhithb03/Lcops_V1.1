@@ -15,7 +15,7 @@
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
         <h5 class="card-title fw-bold m-0">Submitted Documents Review Queue</h5>
-        <span class="badge bg-warning rounded-pill px-3">3 Pending Review</span>
+        <span class="badge bg-success rounded-pill px-3">All Reviewed</span>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive border-0">
@@ -27,86 +27,50 @@
                         <th>File Type</th>
                         <th>Upload Date</th>
                         <th>Validation Status</th>
-                        <th class="text-end">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="validationTableBody">
-                    <!-- Rendered by JS -->
+                <tbody>
+                    <tr>
+                        <td><i class="fa-solid fa-file-pdf text-danger me-2"></i><span class="fw-semibold">PAN_Card_Rajesh_Kumar.pdf</span></td>
+                        <td>Identity</td>
+                        <td><span class="badge bg-light text-secondary border">PDF</span></td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-file-pdf text-danger me-2"></i><span class="fw-semibold">Salary_Slip_May_2026.pdf</span></td>
+                        <td>Income Proof</td>
+                        <td><span class="badge bg-light text-secondary border">PDF</span></td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-file-pdf text-danger me-2"></i><span class="fw-semibold">Bank_Statement_HDFC_Jan_Jun.pdf</span></td>
+                        <td>Bank Statement</td>
+                        <td><span class="badge bg-light text-secondary border">PDF</span></td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-file-pdf text-danger me-2"></i><span class="fw-semibold">Property_Title_Deed_Bangalore.pdf</span></td>
+                        <td>Property Docs</td>
+                        <td><span class="badge bg-light text-secondary border">PDF</span></td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-file-pdf text-danger me-2"></i><span class="fw-semibold">Employer_Letter_TechCorp.pdf</span></td>
+                        <td>Employer Letter</td>
+                        <td><span class="badge bg-light text-secondary border">PDF</span></td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge bg-warning text-dark">Pending Review</span></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
         <span class="text-muted small">All mandatory documents must be accepted before underwriting.</span>
-        <button class="btn btn-success px-4" onclick="approveAllDocs()">
-            <i class="fa-solid fa-check-double me-2"></i> Approve All & Forward
-        </button>
+        <a href="/Credit/Evaluate/9844" class="btn btn-success px-4"><i class="fa-solid fa-check-double me-2"></i> Approve All & Forward</a>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        const validationDocs = [
-            { name: "PAN_Card_Rajesh_Kumar.pdf", category: "Identity", type: "PDF", uploadDate: "2026-06-24", status: "Accepted" },
-            { name: "Salary_Slip_May_2026.pdf", category: "Income Proof", type: "PDF", uploadDate: "2026-06-24", status: "Accepted" },
-            { name: "Bank_Statement_HDFC_Jan_Jun.pdf", category: "Bank Statement", type: "PDF", uploadDate: "2026-06-24", status: "Pending" },
-            { name: "Property_Title_Deed_Bangalore.pdf", category: "Property Docs", type: "PDF", uploadDate: "2026-06-24", status: "Pending" },
-            { name: "Employer_Letter_TechCorp.pdf", category: "Employer Letter", type: "PDF", uploadDate: "2026-06-24", status: "Pending" }
-        ];
-
-        function renderValidationTable() {
-            const tbody = document.getElementById("validationTableBody");
-            tbody.innerHTML = validationDocs.map((doc, idx) => {
-                let badgeClass = "badge-status-pending";
-                if (doc.status === "Accepted") badgeClass = "badge-status-approved";
-                if (doc.status === "Rejected") badgeClass = "badge-status-rejected";
-
-                return `
-                    <tr id="docRow${idx}">
-                        <td><i class="fa-solid fa-file-pdf text-danger me-2"></i><span class="fw-semibold">${doc.name}</span></td>
-                        <td>${doc.category}</td>
-                        <td><span class="badge bg-light text-secondary border">${doc.type}</span></td>
-                        <td>${doc.uploadDate}</td>
-                        <td><span class="badge-status ${badgeClass}" id="docBadge${idx}">${doc.status}</span></td>
-                        <td class="text-end">
-                            <div class="d-flex gap-1 justify-content-end">
-                                ${doc.status !== "Accepted" ? `<button class="btn btn-sm btn-outline-success" onclick="setDocStatus(${idx},'Accepted')"><i class="fa-solid fa-check"></i></button>` : ''}
-                                ${doc.status !== "Rejected" ? `<button class="btn btn-sm btn-outline-danger" onclick="setDocStatus(${idx},'Rejected')"><i class="fa-solid fa-xmark"></i></button>` : ''}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function setDocStatus(idx, status) {
-            validationDocs[idx].status = status;
-            renderValidationTable();
-            if (window.logWorkflowAction) {
-                window.logWorkflowAction(status === "Accepted" ? "Document Approval" : "Document Rejection", validationDocs[idx].name);
-            }
-            const type = status === "Accepted" ? "success" : "warning";
-            showToast("Status Updated", `${validationDocs[idx].name} marked as <strong>${status}</strong>.`, type);
-        }
-
-        function approveAllDocs() {
-            showConfirmationModal(
-                "Approve All Documents?",
-                "Marking all documents as accepted will forward the application to the Credit Evaluation step. Are you sure?",
-                function() {
-                    validationDocs.forEach(d => d.status = "Accepted");
-                    renderValidationTable();
-                    localStorage.setItem("locps_application_state", "verified_docs");
-                    if (window.logWorkflowAction) {
-                        window.logWorkflowAction("Document Verification", "LOC-9844-32");
-                        window.logWorkflowAction("Document Approval", "All Documents (LOC-9844-32)");
-                    }
-                    showToast("Documents Approved", "All documents accepted. Proceeding to credit evaluation.", "success");
-                    setTimeout(() => { window.location.href = "/Credit/Evaluate/9844"; }, 1500);
-                }
-            );
-        }
-
-        document.addEventListener("DOMContentLoaded", renderValidationTable);
-    </script>
-}

@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Notifications";
+    var activeRole = Context.Request.Cookies["locps_demo_role"] ?? "officer";
 }
 
 <div class="row mb-4 align-items-center">
@@ -8,76 +9,121 @@
         <p class="text-muted mb-0">System alerts, workflow updates and compliance notices.</p>
     </div>
     <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-        <button class="btn btn-outline-secondary btn-sm" onclick="clearNotifications()">
-            <i class="fa-solid fa-check-double me-2"></i> Mark All Read
-        </button>
+        <a href="/Notification" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-check-double me-2"></i> Mark All Read</a>
     </div>
 </div>
 
 <div class="card border-0 shadow-sm">
     <div class="card-body p-0">
-        <div class="list-group list-group-flush" id="notifList">
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            renderNotifications();
-        });
-
-        function renderNotifications() {
-            const role = localStorage.getItem("locps_demo_role") || "officer";
-            const loanType = localStorage.getItem("locps_loan_type") || "Home Purchase Loan";
-            const notificationsDb = {
-                customer: [
-                    { icon: "fa-paper-plane", color: "primary", title: "Application Submitted", body: "Your " + loanType + " application LOC-9844-32 has been recorded in pending state.", time: "10 minutes ago", unread: true, link: "/Dashboard" },
-                    { icon: "fa-check-circle", color: "success", title: "Documents Verified", body: "Your uploaded identity and salary verification documents were successfully validated.", time: "5 minutes ago", unread: true, link: "/Dashboard" }
-                ],
-                officer: [
-                    { icon: "fa-id-card", color: "primary", title: "KYC Uploaded", body: "Customer 'Rajesh Kumar' uploaded verification documents for application LOC-9844-32.", time: "2 minutes ago", unread: true, link: "/Kyc/Verify/9844" },
-                    { icon: "fa-file-shield", color: "info", title: "Documents Uploaded", body: "Application #LOC-9844-32 has documents ready for validation.", time: "15 minutes ago", unread: true, link: "/Document/Validate/9844" }
-                ],
-                underwriter: [
-                    { icon: "fa-signature", color: "info", title: "Ready for Underwriting", body: "Application #LOC-9844-32 has passed all credit thresholds and is queued for review.", time: "15 minutes ago", unread: true, link: "/Approval/Review/9844" },
-                    { icon: "fa-hand-holding-dollar", color: "success", title: "Disbursement Pending", body: "Approved application #LOC-7788-12 requires payment processing initiation.", time: "1 hour ago", unread: true, link: "/Disbursement/Create/9844" }
-                ],
-                admin: [
-                    { icon: "fa-user-shield", color: "primary", title: "New User Registered", body: "New loan officer account registered in the system.", time: "30 minutes ago", unread: true, link: "/UserManagement" },
-                    { icon: "fa-sliders", color: "success", title: "System Weights Updated", body: "Scoring engine weights were successfully modified by Admin.", time: "2 hours ago", unread: true, link: "/Settings/ScoringRules" }
-                ]
-            };
-
-            const list = document.getElementById("notifList");
-            const roleNotifs = notificationsDb[role] || [];
-
-            if (roleNotifs.length === 0) {
-                list.innerHTML = `
-                    <div class="text-center py-5 text-muted">
-                        <i class="fa-regular fa-bell-slash fs-3 mb-3 d-block"></i>
-                        No alerts in your inbox
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = roleNotifs.map((n, i) => `
-                <a href="${n.link}" class="list-group-item list-group-item-action p-4 ${n.unread ? 'bg-primary bg-opacity-5' : ''}">
+        <div class="list-group list-group-flush">
+            @if (activeRole == "customer")
+            {
+                <a href="/Dashboard" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
                     <div class="d-flex gap-3 align-items-start">
-                        <div class="bg-${n.color} bg-opacity-10 text-${n.color} rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
-                            <i class="fa-solid ${n.icon}"></i>
-                        </div>
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-paper-plane"></i></div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span class="fw-bold text-dark">${n.title} ${n.unread ? '<span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span>' : ''}</span>
-                                <small class="text-muted text-nowrap ms-2">${n.time}</small>
+                                <span class="fw-bold text-dark">Application Submitted <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">10 minutes ago</small>
                             </div>
-                            <p class="mb-0 text-muted small">${n.body}</p>
+                            <p class="mb-0 text-muted small">Your Home Purchase Loan application LOC-9844-32 has been recorded in pending state.</p>
                         </div>
                     </div>
                 </a>
-            `).join('');
-        }
-    </script>
-}
+                <a href="/Dashboard" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-check-circle"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">Documents Verified <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">5 minutes ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">Your uploaded identity and salary verification documents were successfully validated.</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else if (activeRole == "underwriter")
+            {
+                <a href="/Approval/Review/9844" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-signature"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">Ready for Underwriting <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">15 minutes ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">Application #LOC-9844-32 has passed all credit thresholds and is queued for review.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/Disbursement/Create/9844" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">Disbursement Pending <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">1 hour ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">Approved application #LOC-7788-12 requires payment processing initiation.</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else if (activeRole == "admin")
+            {
+                <a href="/UserManagement" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">New User Registered <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">30 minutes ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">New loan officer account registered in the system.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/Settings/ScoringRules" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-sliders"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">System Weights Updated <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">2 hours ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">Scoring engine weights were successfully modified by Admin.</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <a href="/Kyc/Verify/9844" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-id-card"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">KYC Uploaded <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">2 minutes ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">Customer 'Rajesh Kumar' uploaded verification documents for application LOC-9844-32.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/Document/Validate/9844" class="list-group-item list-group-item-action p-4 bg-primary bg-opacity-5">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;"><i class="fa-solid fa-file-shield"></i></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">Documents Uploaded <span class="badge bg-primary rounded-pill ms-2" style="font-size: 0.6rem;">NEW</span></span>
+                                <small class="text-muted text-nowrap ms-2">15 minutes ago</small>
+                            </div>
+                            <p class="mb-0 text-muted small">Application #LOC-9844-32 has documents ready for validation.</p>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>

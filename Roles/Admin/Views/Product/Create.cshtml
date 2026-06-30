@@ -16,7 +16,7 @@
                 <h5 class="fw-bold m-0">Product Configuration</h5>
             </div>
             <div class="card-body">
-                <form onsubmit="submitProduct(event)">
+                <form method="post" action="/Product/Create">
                     <div class="row g-3">
                         <div class="col-md-12">
                             <label class="form-label fw-semibold text-muted small">Product Name <span class="text-danger">*</span></label>
@@ -62,9 +62,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex gap-2">
-                        <button type="submit" id="btnSaveProduct" class="btn btn-primary px-4 py-2">
-                            <i class="fa-solid fa-floppy-disk me-2"></i> Save Product
-                        </button>
+                        <a href="/Product" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-floppy-disk me-2"></i> Save Product</a>
                         <a href="/Product" class="btn btn-light border px-4 py-2">Cancel</a>
                     </div>
                 </form>
@@ -72,18 +70,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function submitProduct(e) {
-            e.preventDefault();
-            const btn = document.getElementById("btnSaveProduct");
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Saving...`;
-            setTimeout(() => {
-                showToast("Product Created", "New loan product has been added to the catalog.", "success");
-                setTimeout(() => { window.location.href = "/Product"; }, 1200);
-            }, 1000);
-        }
-    </script>
-}

@@ -19,7 +19,7 @@
                 <h5 class="card-title fw-bold text-dark m-0">Basic Profile Details</h5>
             </div>
             <div class="card-body">
-                <form id="createCustomerForm" onsubmit="submitMockCustomer(event)">
+                <form method="post" action="/Customer/Create">
                     <!-- Grid System for Forms -->
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -90,9 +90,7 @@
                     </div>
                     
                     <div class="mt-4 d-flex gap-2">
-                        <button type="submit" id="btnSubmit" class="btn btn-primary px-4 py-2" style="border-radius: var(--radius-md);">
-                            <i class="fa-solid fa-floppy-disk me-2"></i> Save & Continue
-                        </button>
+                        <a href="/Customer" class="btn btn-primary px-4 py-2" style="border-radius: var(--radius-md);"><i class="fa-solid fa-floppy-disk me-2"></i> Save & Continue</a>
                         <a href="/Customer" class="btn btn-light border px-4 py-2" style="border-radius: var(--radius-md);">Cancel</a>
                     </div>
                 </form>
@@ -114,23 +112,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function submitMockCustomer(e) {
-            e.preventDefault();
-            const btn = document.getElementById("btnSubmit");
-            
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Creating...`;
-            
-            setTimeout(() => {
-                showToast("Success", "Customer Rajesh Kumar has been registered successfully with ID CUST-9018.", "success");
-                
-                setTimeout(() => {
-                    window.location.href = "/Customer";
-                }, 1200);
-            }, 1000);
-        }
-    </script>
-}

@@ -1,38 +1,33 @@
 @{
     var activeRole = Context.Request.Cookies["locps_demo_role"] ?? "officer";
+    var currentPath = Context.Request.Path.Value?.ToLowerInvariant() ?? "";
 }
 
-<aside id="sidebar">
+<aside id="sidebar" class="d-flex flex-column overflow-hidden" style="height:100vh">
     <div class="sidebar-header">
         <a href="/Home/Index" class="brand-logo">
             <i class="fa-solid fa-vault text-primary"></i>
             <span>LOCPS</span> Portal
         </a>
     </div>
-    
-    <div class="nav-menu">
-        <!-- Universal Menu -->
-        <div class="nav-section" data-role="all">
-            <a href="/Dashboard" class="nav-link-item active" id="nav-dashboard">
+
+    <div class="nav-menu flex-grow-1 overflow-auto">
+        <div class="nav-section">
+            <a href="/Dashboard" class="nav-link-item @(currentPath.StartsWith("/dashboard") ? "active" : "")">
                 <i class="fa-solid fa-chart-pie"></i>
                 Dashboard
             </a>
-            <a href="/Notification" class="nav-link-item" id="nav-notifications">
+            @* <a href="/Notification" class="nav-link-item @(currentPath.StartsWith("/notification") ? "active" : "")">
                 <i class="fa-solid fa-bell"></i>
                 Notifications
-            </a>
+            </a> *@
         </div>
 
         @if (activeRole == "customer")
         {
-            <!-- Customer Portal Menu -->
-            <div class="nav-section" data-role="customer">
+            <div class="nav-section">
                 <div class="nav-heading">My Services</div>
-                <a href="/Dashboard" class="nav-link-item" id="nav-cust-dashboard">
-                    <i class="fa-solid fa-table-columns"></i>
-                    My Portal
-                </a>
-                <a href="/Loan/Create" class="nav-link-item" id="nav-cust-apply">
+                <a href="/Loan/Create" class="nav-link-item @(currentPath.StartsWith("/loan/create") ? "active" : "")">
                     <i class="fa-solid fa-file-signature"></i>
                     Apply for Loan
                 </a>
@@ -41,28 +36,27 @@
 
         @if (activeRole == "officer")
         {
-            <!-- Loan Officer Worklist -->
-            <div class="nav-section" data-role="officer">
+            <div class="nav-section">
                 <div class="nav-heading">Customers & Loans</div>
-                <a href="/Customer" class="nav-link-item" id="nav-customers">
+                <a href="/Customer" class="nav-link-item @(currentPath.StartsWith("/customer") ? "active" : "")">
                     <i class="fa-solid fa-users"></i>
                     Customer Directory
                 </a>
-                <a href="/Loan" class="nav-link-item" id="nav-loans">
+                <a href="/Loan" class="nav-link-item @(currentPath.StartsWith("/loan") ? "active" : "")">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     Loan Applications
                 </a>
-                
+
                 <div class="nav-heading">Origination Steps</div>
-                <a href="/Kyc/Verify/9844" class="nav-link-item" id="nav-kyc">
+                <a href="/Kyc/Verify/9844" class="nav-link-item @(currentPath.StartsWith("/kyc") ? "active" : "")">
                     <i class="fa-solid fa-id-card"></i>
                     KYC Verification
                 </a>
-                <a href="/Credit/Evaluate/9844" class="nav-link-item" id="nav-credit">
+                <a href="/Credit/Evaluate/9844" class="nav-link-item @(currentPath.StartsWith("/credit") ? "active" : "")">
                     <i class="fa-solid fa-gauge-high"></i>
                     Credit Evaluation
                 </a>
-                <a href="/Document/Validate/9844" class="nav-link-item" id="nav-doc-validate">
+                <a href="/Document/Validate/9844" class="nav-link-item @(currentPath.Contains("/document/validate") ? "active" : "")">
                     <i class="fa-solid fa-file-shield"></i>
                     Document Validation
                 </a>
@@ -71,18 +65,17 @@
 
         @if (activeRole == "underwriter")
         {
-            <!-- Underwriter Operations -->
-            <div class="nav-section" data-role="underwriter">
+            <div class="nav-section">
                 <div class="nav-heading">Credit Decisioning</div>
-                <a href="/Approval/Review/9844" class="nav-link-item" id="nav-underwrite">
+                <a href="/Approval/Review/9844" class="nav-link-item @(currentPath.StartsWith("/approval") ? "active" : "")">
                     <i class="fa-solid fa-signature"></i>
                     Underwriter Review
                 </a>
-                <a href="/Disbursement/Create/9844" class="nav-link-item" id="nav-disburse-initiate">
+                <a href="/Disbursement/Create/9844" class="nav-link-item @(currentPath.Contains("/disbursement/create") ? "active" : "")">
                     <i class="fa-solid fa-hand-holding-dollar"></i>
                     Initiate Disbursement
                 </a>
-                <a href="/Disbursement/History" class="nav-link-item" id="nav-disbursements">
+                <a href="/Disbursement/History" class="nav-link-item @(currentPath.Contains("/disbursement/history") ? "active" : "")">
                     <i class="fa-solid fa-money-bill-transfer"></i>
                     Disbursement History
                 </a>
@@ -91,51 +84,60 @@
 
         @if (activeRole == "admin")
         {
-            <!-- Admin Configuration & Management -->
-            <div class="nav-section" data-role="admin">
+            <div class="nav-section">
                 <div class="nav-heading">Administration</div>
-                <a href="/Product" class="nav-link-item" id="nav-products">
+                <a href="/Product" class="nav-link-item @(currentPath.StartsWith("/product") ? "active" : "")">
                     <i class="fa-solid fa-box-archive"></i>
                     Loan Products
                 </a>
-                <a href="/UserManagement" class="nav-link-item" id="nav-users">
+                <a href="/UserManagement" class="nav-link-item @(currentPath.StartsWith("/usermanagement") ? "active" : "")">
                     <i class="fa-solid fa-user-shield"></i>
                     User Management
                 </a>
-                <a href="/Settings/ScoringRules" class="nav-link-item" id="nav-scoring">
+                <a href="/Settings/ScoringRules" class="nav-link-item @(currentPath.Contains("/settings/scoringrules") ? "active" : "")">
                     <i class="fa-solid fa-sliders"></i>
                     Scoring Engine Weights
                 </a>
-                <a href="/Settings/AuditLogs" class="nav-link-item" id="nav-auditlogs">
+                <a href="/Settings/AuditLogs" class="nav-link-item @(currentPath.Contains("/settings/auditlogs") ? "active" : "")">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                     Audit Log Trail
                 </a>
-                
+
                 <div class="nav-heading">Settlement & Reports</div>
-                <a href="/Disbursement/History" class="nav-link-item" id="nav-disbursements-admin">
+                <a href="/Disbursement/History" class="nav-link-item @(currentPath.Contains("/disbursement/history") ? "active" : "")">
                     <i class="fa-solid fa-hand-holding-dollar"></i>
                     Disbursements
                 </a>
-                <a href="/Reports" class="nav-link-item" id="nav-reports">
+                <a href="/Reports" class="nav-link-item @(currentPath.StartsWith("/reports") ? "active" : "")">
                     <i class="fa-solid fa-chart-line"></i>
                     Reports & Analytics
                 </a>
             </div>
         }
     </div>
-    
+
     <div class="sidebar-footer">
         <div class="role-selector-container">
-            <label class="text-white-50 small d-block mb-1">Current Demo Role</label>
-            <select id="roleSelector" class="form-select role-dropdown-select w-100">
-                <option value="customer">Customer</option>
-                <option value="officer">Loan Officer</option>
-                <option value="underwriter">Underwriter</option>
-                <option value="admin">System Admin</option>
-            </select>
+            <label class="text-white-50 small d-block mb-1">Switch Demo Role</label>
+            <div class="d-flex flex-column gap-1">
+                @foreach (var roleOption in new[] {
+                    ("customer", "Customer"),
+                    ("officer", "Loan Officer"),
+                    ("underwriter", "Underwriter"),
+                    ("admin", "System Admin")
+                })
+                {
+                    <form method="post" action="/Account/Login" class="m-0">
+                        <input type="hidden" name="role" value="@roleOption.Item1" />
+                        <button type="submit" class="role-switch-btn w-100 @(activeRole == roleOption.Item1 ? "active" : "")">
+                            @roleOption.Item2
+                        </button>
+                    </form>
+                }
+            </div>
         </div>
-        <div class="mt-2 text-center">
-            <a href="/Account/Login" class="text-white-50 small text-decoration-none">
+        <div class="mt-3 text-center">
+            <a href="/Account/Logout" class="text-white-50 small text-decoration-none">
                 <i class="fa-solid fa-right-from-bracket me-1"></i> Sign Out
             </a>
         </div>

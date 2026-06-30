@@ -14,7 +14,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white border-0 py-3"><h5 class="fw-bold m-0">Edit: Anjali Sharma</h5></div>
             <div class="card-body">
-                <form onsubmit="saveUser(event)">
+                <form method="post" action="/UserManagement/Edit/2">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label fw-semibold text-muted small">Full Name</label>
@@ -49,9 +49,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex gap-2">
-                        <button type="submit" id="btnSaveUser" class="btn btn-primary px-4 py-2">
-                            <i class="fa-solid fa-floppy-disk me-2"></i> Save Changes
-                        </button>
+                        <a href="/UserManagement" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-floppy-disk me-2"></i> Save Changes</a>
                         <a href="/UserManagement" class="btn btn-light border px-4 py-2">Cancel</a>
                     </div>
                 </form>
@@ -59,18 +57,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function saveUser(e) {
-            e.preventDefault();
-            const btn = document.getElementById("btnSaveUser");
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Saving...`;
-            setTimeout(() => {
-                showToast("User Updated", "Account changes for Anjali Sharma saved.", "success");
-                setTimeout(() => { window.location.href = "/UserManagement"; }, 1200);
-            }, 1000);
-        }
-    </script>
-}

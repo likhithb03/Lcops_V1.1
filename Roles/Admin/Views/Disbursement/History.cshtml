@@ -15,9 +15,7 @@
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
         <h5 class="card-title fw-bold m-0">Transaction History</h5>
-        <button class="btn btn-outline-primary btn-sm" onclick="exportDisbursements()">
-            <i class="fa-solid fa-download me-2"></i> Export CSV
-        </button>
+        <a href="/Disbursement/History" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-download me-2"></i> Export CSV</a>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive border-0">
@@ -33,54 +31,54 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody id="disbursementBody">
+                <tbody>
+                    <tr>
+                        <td><span class="fw-bold text-dark">DBR-20260624-9844</span></td>
+                        <td>LOC-9844-32</td>
+                        <td>Rajesh Kumar</td>
+                        <td class="fw-semibold">₹ 44,88,750</td>
+                        <td><span class="badge bg-light text-secondary border">NEFT</span></td>
+                        <td>2026-06-24</td>
+                        <td><span class="badge-status badge-status-processing">Processing</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">DBR-20260620-7788</span></td>
+                        <td>LOC-7788-12</td>
+                        <td>Sunitha Rao</td>
+                        <td class="fw-semibold">₹ 4,97,500</td>
+                        <td><span class="badge bg-light text-secondary border">IMPS</span></td>
+                        <td>2026-06-20</td>
+                        <td><span class="badge-status badge-status-approved">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">DBR-20260615-1155</span></td>
+                        <td>LOC-1155-77</td>
+                        <td>Vikram Singh</td>
+                        <td class="fw-semibold">₹ 59,78,000</td>
+                        <td><span class="badge bg-light text-secondary border">NEFT</span></td>
+                        <td>2026-06-15</td>
+                        <td><span class="badge-status badge-status-approved">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">DBR-20260612-4455</span></td>
+                        <td>LOC-4455-88</td>
+                        <td>Deepa Balakrishnan</td>
+                        <td class="fw-semibold">₹ 3,49,125</td>
+                        <td><span class="badge bg-light text-secondary border">NEFT</span></td>
+                        <td>2026-06-12</td>
+                        <td><span class="badge-status badge-status-approved">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="fw-bold text-dark">DBR-20260610-9900</span></td>
+                        <td>LOC-9900-11</td>
+                        <td>Suresh Prabhu</td>
+                        <td class="fw-semibold">₹ 21,94,500</td>
+                        <td><span class="badge bg-light text-secondary border">IMPS</span></td>
+                        <td>2026-06-10</td>
+                        <td><span class="badge-status badge-status-approved">Completed</span></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/js/data-grid.js"></script>
-    <script>
-        const disbursementsData = [
-            { ref: "DBR-20260624-9844", appId: "LOC-9844-32", applicant: "Rajesh Kumar", amount: 4488750, mode: "NEFT", date: "2026-06-24", status: "Processing" },
-            { ref: "DBR-20260620-7788", appId: "LOC-7788-12", applicant: "Sunitha Rao", amount: 497500, mode: "IMPS", date: "2026-06-20", status: "Completed" },
-            { ref: "DBR-20260615-1155", appId: "LOC-1155-77", applicant: "Vikram Singh", amount: 5978000, mode: "NEFT", date: "2026-06-15", status: "Completed" }
-        ];
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Read from local storage if available
-            const loanAmount = localStorage.getItem("locps_loan_amount") ? parseInt(localStorage.getItem("locps_loan_amount")) : 4500000;
-            const fee = Math.round(loanAmount * 0.0025);
-            disbursementsData[0].amount = loanAmount - fee;
-
-            const tbody = document.getElementById("disbursementBody");
-            tbody.innerHTML = disbursementsData.map(r => {
-                let bc = r.status === "Completed" ? "badge-status-approved" : "badge-status-processing";
-                return `<tr>
-                    <td><span class="fw-bold text-dark">${r.ref}</span></td>
-                    <td>${r.appId}</td>
-                    <td>${r.applicant}</td>
-                    <td class="fw-semibold">₹ ${r.amount.toLocaleString('en-IN')}</td>
-                    <td><span class="badge bg-light text-secondary border">${r.mode}</span></td>
-                    <td>${r.date}</td>
-                    <td><span class="badge-status ${bc}">${r.status}</span></td>
-                </tr>`;
-            }).join('');
-        });
-
-        function exportDisbursements() {
-            const header = ["Transaction Ref", "Application ID", "Applicant", "Amount", "Mode", "Date", "Status"];
-            const rows = disbursementsData.map(r =>
-                [r.ref, r.appId, r.applicant, r.amount, r.mode, r.date, r.status].join(",")
-            );
-            const csv = [header.join(","), ...rows].join("\n");
-            const blob = new Blob([csv], { type: "text/csv" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a"); a.href = url; a.download = "disbursements.csv"; a.click();
-            URL.revokeObjectURL(url);
-            showToast("Export Ready", "Disbursement ledger exported as CSV.", "success");
-        }
-    </script>
-}

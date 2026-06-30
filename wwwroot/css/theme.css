@@ -1,14 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
 :root {
-    --primary-blue: #1E40AF;
-    --primary-blue-hover: #1D4ED8;
+    --color-primary: #1E40AF;
+    --color-primary-dark: #1D4ED8;
+    --color-accent: #3B82F6;
+    --color-surface: #FFFFFF;
+    --color-background: #F8FAFC;
+    --color-text: #0F172A;
+    --color-text-muted: #64748B;
+
+    --primary-blue: var(--color-primary);
+    --primary-blue-hover: var(--color-primary-dark);
     --secondary-navy: #0F172A;
     --secondary-navy-light: #1E293B;
-    --body-bg: #F8FAFC;
-    --surface-white: #FFFFFF;
-    --text-main: #0F172A;
-    --text-muted: #64748B;
+    --body-bg: var(--color-background);
+    --surface-white: var(--color-surface);
+    --text-main: var(--color-text);
+    --text-muted: var(--color-text-muted);
     --border-color: #E2E8F0;
     
     --success: #10B981;
@@ -34,14 +42,128 @@
     --topbar-height: 70px;
     --transition-speed: 0.25s;
 }
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--body-bg);
     color: var(--text-main);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.card-title {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-text);
+}
+
+/* CSS-only mobile sidebar toggle */
+.sidebar-toggle-input {
+    position: fixed;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.role-switch-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94A3B8;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.4rem 0.65rem;
+    border-radius: var(--radius-sm);
+    text-align: left;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.role-switch-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--surface-white);
+}
+
+.role-switch-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--surface-white);
+    font-weight: 600;
+}
+
+/* CSS bar chart (replaces Chart.js) */
+.css-bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    height: 180px;
+    padding: 1rem 0;
+}
+
+.css-bar-chart .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.css-bar-chart .bar {
+    width: 100%;
+    max-width: 48px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    background: linear-gradient(180deg, var(--color-accent) 0%, var(--color-primary) 100%);
+    transition: transform 0.2s ease;
+}
+
+.css-bar-chart .bar-group:hover .bar {
+    transform: scaleY(1.03);
+}
+
+.css-bar-chart .bar-label {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.css-donut {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(
+        var(--success) 0deg 180deg,
+        var(--warning) 180deg 230deg,
+        var(--info) 230deg 270deg,
+        var(--danger) 270deg 300deg,
+        var(--color-primary) 300deg 360deg
+    );
+    position: relative;
+    margin: 0 auto;
+}
+
+.css-donut::after {
+    content: '';
+    position: absolute;
+    inset: 28%;
+    background: var(--color-surface);
+    border-radius: 50%;
 }
 
 /* Sidebar Styling */
@@ -249,6 +371,7 @@ body {
 .btn-primary:hover, .btn-primary:focus {
     background-color: var(--primary-blue-hover);
     border-color: var(--primary-blue-hover);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Custom Stepper */
@@ -433,9 +556,10 @@ body {
     #sidebar {
         left: calc(-1 * var(--sidebar-width));
     }
-    
-    #sidebar.show {
+
+    .sidebar-toggle-input:checked ~ #sidebar {
         left: 0;
+        box-shadow: 8px 0 32px rgba(15, 23, 42, 0.2);
     }
     
     #wrapper {
@@ -540,6 +664,8 @@ body {
     text-align: center;
     margin-top: 0.25rem;
 }
+
+
 
 @media (max-width: 767.98px) {
     .stepper {

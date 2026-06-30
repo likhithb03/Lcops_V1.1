@@ -14,7 +14,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white border-0 py-3"><h5 class="fw-bold m-0">User Account Details</h5></div>
             <div class="card-body">
-                <form onsubmit="createUser(event)">
+                <form method="post" action="/UserManagement/Create">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label fw-semibold text-muted small">Full Name <span class="text-danger">*</span></label>
@@ -54,9 +54,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex gap-2">
-                        <button type="submit" id="btnCreateUser" class="btn btn-primary px-4 py-2">
-                            <i class="fa-solid fa-user-plus me-2"></i> Create User Account
-                        </button>
+                        <a href="/UserManagement" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-user-plus me-2"></i> Create User Account</a>
                         <a href="/UserManagement" class="btn btn-light border px-4 py-2">Cancel</a>
                     </div>
                 </form>
@@ -64,18 +62,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function createUser(e) {
-            e.preventDefault();
-            const btn = document.getElementById("btnCreateUser");
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Creating...`;
-            setTimeout(() => {
-                showToast("User Created", "New system user account has been provisioned.", "success");
-                setTimeout(() => { window.location.href = "/UserManagement"; }, 1200);
-            }, 1000);
-        }
-    </script>
-}

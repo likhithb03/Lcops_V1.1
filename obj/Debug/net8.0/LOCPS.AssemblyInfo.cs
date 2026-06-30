@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LOCPS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a7ba4158d50bb4eaf9b91571a3f43e609f27acfb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75cc60ee32e4227b6b0600881d8f7d0c31e8245d")]
 [assembly: System.Reflection.AssemblyProductAttribute("LOCPS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LOCPS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

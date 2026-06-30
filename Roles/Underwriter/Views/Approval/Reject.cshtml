@@ -39,10 +39,10 @@
                 <span class="text-muted">Rejected By</span><span class="fw-semibold">Anjali Sharma (Underwriter)</span>
             </li>
             <li class="list-group-item px-0 py-3 d-flex justify-content-between">
-                <span class="text-muted">Loan Product</span><span class="fw-semibold" id="rejProduct">Home Purchase Loan</span>
+                <span class="text-muted">Loan Product</span><span class="fw-semibold">Home Purchase Loan</span>
             </li>
             <li class="list-group-item px-0 py-3 d-flex justify-content-between">
-                <span class="text-muted">Requested Amount</span><span class="fw-bold text-danger" id="rejAmount">₹ 45,00,000</span>
+                <span class="text-muted">Requested Amount</span><span class="fw-bold text-danger">₹ 45,00,000</span>
             </li>
             <li class="list-group-item px-0 py-3 d-flex justify-content-between">
                 <span class="text-muted">Rejection Date</span><span class="fw-semibold">June 24, 2026</span>
@@ -50,18 +50,3 @@
         </ul>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const loanType = localStorage.getItem("locps_loan_type") || "Home Purchase Loan";
-            const loanAmount = localStorage.getItem("locps_loan_amount") ? parseInt(localStorage.getItem("locps_loan_amount")) : 4500000;
-
-            const rejProduct = document.getElementById("rejProduct");
-            if (rejProduct) rejProduct.textContent = loanType;
-
-            const rejAmount = document.getElementById("rejAmount");
-            if (rejAmount) rejAmount.textContent = "₹ " + loanAmount.toLocaleString('en-IN');
-        });
-    </script>
-}
